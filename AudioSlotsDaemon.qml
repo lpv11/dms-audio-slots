@@ -14,7 +14,7 @@ PluginComponent {
     readonly property string homeDir: Quickshell.env("HOME") || ""
     readonly property string appMuteScriptPath: homeDir + "/.config/DankMaterialShell/plugins/dms-audio-slots/assets/toggle-focused-mute.sh"
     readonly property Toplevel activeWindow: ToplevelManager.activeToplevel
-    readonly property string notificationMode: pluginData.notificationMode || "toast"
+    readonly property string notificationMode: pluginData.notificationMode || "desktop"
     property var activeDesktopEntry: null
 
     function updateDesktopEntry() {

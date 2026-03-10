@@ -97,7 +97,7 @@ PluginSettings {
             {label: "Desktop notify-send", value: "desktop"},
             {label: "Hyprland (hyprctl notify)", value: "hypr"}
         ]
-        defaultValue: pluginData.notificationMode || "toast"
+        defaultValue: pluginData.notificationMode || "desktop"
     }
 
     StyledRect {
