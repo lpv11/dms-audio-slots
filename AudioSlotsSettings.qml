@@ -38,7 +38,7 @@ PluginSettings {
     function refreshDevices() {
         const allNodes = Array.from(Pipewire.nodes.values);
         const outputs = allNodes.filter(node => node.audio && node.isSink && !node.isStream).map(toOption);
-        const inputs = allNodes.filter(node => node.audio && node.isSource && !node.isStream && !(node.name || "").endsWith(".monitor")).map(toOption);
+        const inputs = allNodes.filter(node => node.audio && !node.isSink && !node.isStream && !(node.name || "").endsWith(".monitor")).map(toOption);
 
         const sortedOutputs = sortByLabel(uniqueByValue(outputs));
         const sortedInputs = sortByLabel(uniqueByValue(inputs));
