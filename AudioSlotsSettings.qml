@@ -78,7 +78,7 @@ PluginSettings {
     StyledText {
         width: parent.width
         wrapMode: Text.WordWrap
-        text: "Save four output slots and three input slots from live Pipewire device discovery. IPC commands cycle only through saved devices that are currently connected."
+        text: "Save four output slots and four input slots from live Pipewire device discovery. IPC commands cycle only through saved devices that are currently connected."
         font.pixelSize: Theme.fontSizeSmall
         color: Theme.surfaceVariantText
     }
@@ -173,6 +173,13 @@ PluginSettings {
         label: "Input slot 3"
         options: root.inputDevices.length ? root.inputDevices : root.emptyOption
         defaultValue: root.slotDefault(root.inputDevices, pluginData.inputSlot3 || "", 2)
+    }
+
+    SelectionSetting {
+        settingKey: "inputSlot4"
+        label: "Input slot 4"
+        options: root.inputDevices.length ? root.inputDevices : root.emptyOption
+        defaultValue: root.slotDefault(root.inputDevices, pluginData.inputSlot4 || "", 3)
     }
 
     StyledRect {

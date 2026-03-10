@@ -66,7 +66,7 @@ PluginComponent {
     }
 
     function inputCandidates() {
-        const names = slotNames("input", 3);
+        const names = slotNames("input", 4);
         const nodes = Array.from(Pipewire.nodes.values).filter(node => node.audio && node.isSource && !node.isStream && !(node.name || "").endsWith(".monitor"));
         return names.map(name => nodes.find(n => n.name === name)).filter(Boolean);
     }

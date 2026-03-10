@@ -11,7 +11,7 @@ No bar widget is required.
 ## Features
 
 - Runs as a DMS `daemon` plugin
-- Save up to 4 output slots and 3 input slots
+- Save up to 4 output slots and 4 input slots
 - `Disabled` option per slot
 - IPC commands for output/input/app-mute
 - Configurable notifications:
@@ -40,7 +40,7 @@ Restart dms with `dms restart` or from DMS power menu if it does not load.
 ## Settings
 
 - **Output slot 1/2/3/4**: Saved output devices for cycling
-- **Input slot 1/2/3**: Saved input devices for cycling
+- **Input slot 1/2/3/4**: Saved input devices for cycling
 - **Notification backend**:
   - `DMS toast`
   - `Desktop notify-send`
