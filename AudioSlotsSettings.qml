@@ -43,19 +43,18 @@ PluginSettings {
         const sortedOutputs = sortByLabel(uniqueByValue(outputs));
         const sortedInputs = sortByLabel(uniqueByValue(inputs));
 
-        root.outputDevices = [root.disabledOption].concat(sortedOutputs);
-        root.inputDevices = [root.disabledOption].concat(sortedInputs);
+        root.outputDevices = sortedOutputs.concat([root.disabledOption]);
+        root.inputDevices = sortedInputs.concat([root.disabledOption]);
     }
 
     function slotDefault(devices, savedValue, fallbackIndex) {
         if (savedValue && savedValue.length > 0)
             return savedValue;
-        if (devices.length > fallbackIndex + 1)
-            return devices[fallbackIndex + 1].value;
-        if (devices.length > 1)
-            return devices[1].value;
-        if (devices.length > 0)
-            return devices[fallbackIndex].value;
+        const realDevices = devices.filter(d => d.value && d.value.length > 0);
+        if (realDevices.length > fallbackIndex)
+            return realDevices[fallbackIndex].value;
+        if (realDevices.length > 0)
+            return realDevices[0].value;
         return "";
     }
 
@@ -79,7 +78,7 @@ PluginSettings {
     StyledText {
         width: parent.width
         wrapMode: Text.WordWrap
-        text: "Save three output slots and three input slots from live pactl device discovery. IPC commands then cycle only through the saved devices that are currently connected."
+        text: "Save four output slots and three input slots from live Pipewire device discovery. IPC commands cycle only through saved devices that are currently connected."
         font.pixelSize: Theme.fontSizeSmall
         color: Theme.surfaceVariantText
     }
@@ -133,6 +132,13 @@ PluginSettings {
         label: "Output slot 3"
         options: root.outputDevices.length ? root.outputDevices : root.emptyOption
         defaultValue: root.slotDefault(root.outputDevices, pluginData.outputSlot3 || "", 2)
+    }
+
+    SelectionSetting {
+        settingKey: "outputSlot4"
+        label: "Output slot 4"
+        options: root.outputDevices.length ? root.outputDevices : root.emptyOption
+        defaultValue: root.slotDefault(root.outputDevices, pluginData.outputSlot4 || "", 3)
     }
 
     StyledRect {

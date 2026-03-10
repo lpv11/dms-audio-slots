@@ -49,22 +49,24 @@ PluginComponent {
         }
     }
 
-    function slotNames(prefix) {
-        return [
-            pluginData[prefix + "Slot1"] || "",
-            pluginData[prefix + "Slot2"] || "",
-            pluginData[prefix + "Slot3"] || ""
-        ].filter(name => name.length > 0);
+    function slotNames(prefix, count) {
+        const out = [];
+        for (let i = 1; i <= count; i++) {
+            const value = pluginData[prefix + "Slot" + i] || "";
+            if (value.length > 0)
+                out.push(value);
+        }
+        return out;
     }
 
     function outputCandidates() {
-        const names = slotNames("output");
+        const names = slotNames("output", 4);
         const nodes = Array.from(Pipewire.nodes.values).filter(node => node.audio && node.isSink && !node.isStream);
         return names.map(name => nodes.find(n => n.name === name)).filter(Boolean);
     }
 
     function inputCandidates() {
-        const names = slotNames("input");
+        const names = slotNames("input", 3);
         const nodes = Array.from(Pipewire.nodes.values).filter(node => node.audio && node.isSource && !node.isStream && !(node.name || "").endsWith(".monitor"));
         return names.map(name => nodes.find(n => n.name === name)).filter(Boolean);
     }

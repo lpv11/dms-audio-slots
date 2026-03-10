@@ -12,24 +12,36 @@ done
 notify_message() {
   local summary="$1"
   local body="$2"
+  local text="$body"
+  if [[ -n "$summary" ]]; then
+    text="${summary}: ${body}"
+  fi
   if [[ "$notification_mode" == "hypr" ]]; then
     if command -v hyprctl >/dev/null 2>&1; then
-      hyprctl notify 0 2000 "rgb(89,146,255)" "${summary}: ${body}" >/dev/null 2>&1 || true
+      hyprctl notify 0 2000 "rgb(89,146,255)" "$text" >/dev/null 2>&1 || true
     fi
     return
   fi
   if [[ "$notification_mode" == "desktop" ]]; then
     if command -v notify-send >/dev/null 2>&1; then
-      notify-send "$summary" "$body" >/dev/null 2>&1 || true
+      if [[ -n "$summary" ]]; then
+        notify-send "$summary" "$body" >/dev/null 2>&1 || true
+      else
+        notify-send "$body" >/dev/null 2>&1 || true
+      fi
     fi
     return
   fi
   if command -v notify-send >/dev/null 2>&1; then
-    notify-send "$summary" "$body" >/dev/null 2>&1 || true
+    if [[ -n "$summary" ]]; then
+      notify-send "$summary" "$body" >/dev/null 2>&1 || true
+    else
+      notify-send "$body" >/dev/null 2>&1 || true
+    fi
     return
   fi
   if command -v hyprctl >/dev/null 2>&1; then
-    hyprctl notify 0 2000 "rgb(89,146,255)" "${summary}: ${body}" >/dev/null 2>&1 || true
+    hyprctl notify 0 2000 "rgb(89,146,255)" "$text" >/dev/null 2>&1 || true
   fi
 }
 
@@ -273,9 +285,9 @@ elif [[ $muted_count -gt 0 && $unmuted_count -gt 0 ]]; then
 fi
 
 if [[ -n "$app_name" ]]; then
-  notify_message "Audio App Mute" "${state_msg} - ${app_name}"
+  notify_message "" "${state_msg} ${app_name}"
 elif [[ -n "$app_id" ]]; then
-  notify_message "Audio App Mute" "${state_msg} - ${app_id}"
+  notify_message "" "${state_msg} ${app_id}"
 else
-  notify_message "Audio App Mute" "$state_msg"
+  notify_message "" "$state_msg"
 fi
